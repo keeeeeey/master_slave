@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.example.cqrs"})
+@EnableJpaRepositories(basePackages = {"com.example.cqrs.repository"})
 public class DataSourceConfig {
 
     @Bean
@@ -61,7 +61,7 @@ public class DataSourceConfig {
     @Bean
     @Primary
     @DependsOn("routingDataSource")
-    public LazyConnectionDataSourceProxy dataSource(DataSource routingDataSource){
+    public LazyConnectionDataSourceProxy dataSource(@Qualifier("routingDataSource") DataSource routingDataSource){
         return new LazyConnectionDataSourceProxy(routingDataSource);
     }
 }
